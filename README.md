@@ -1,4 +1,4 @@
-This is a azdev-ify Useful Website written in Flask for demo purposes.
+This is a azdev-ify Useful Website written in Flask for demo purposes and used in this blog post: https://techcommunity.microsoft.com/t5/apps-on-azure-blog/part-1-azdev-ify-what/ba-p/3644493
 
 The [Azure Developer CLI (azd)](https://aka.ms/azd) makes it quick and easy to get up and running on Azure by following a few conventions.  
 
