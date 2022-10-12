@@ -1,0 +1,6 @@
+name: TheCatSaidNo
+services:
+  web:
+    project: .
+    language: py
+    host: appservice
