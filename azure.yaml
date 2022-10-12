@@ -1,4 +1,6 @@
 name: TheCatSaidNo
+metadata:
+  template: TheCatSaidNo@0.0.1-beta
 services:
   web:
     project: .
