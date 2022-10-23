@@ -6,24 +6,30 @@ param appCommandLine string = ''
 param applicationInsightsName string = ''
 
 // The application frontend
-module web './core/host/appservice-python.bicep' = {
+module web './core/host/appservice.bicep' = {
   name: '${serviceName}-appservice-python-module'
   params: {
     environmentName: environmentName
     location: location
-    serviceName: serviceName
     appCommandLine: appCommandLine
     applicationInsightsName: applicationInsightsName
     appServicePlanId: appServicePlan.outputs.appServicePlanId
+    runtimeName: 'python'
+    runtimeVersion: '3.8'
+    scmDoBuildDuringDeployment: true
+    serviceName: serviceName
   }
 }
 
 // Create an App Service Plan to group applications under the same payment plan and SKU
-module appServicePlan './core/host/appserviceplan-sites.bicep' = {
+module appServicePlan './core/host/appserviceplan.bicep' = {
   name: 'appserviceplan'
   params: {
     environmentName: environmentName
     location: location
+    sku: {
+      name: 'B1'
+    }
   }
 }
 
