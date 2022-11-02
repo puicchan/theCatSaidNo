@@ -16,6 +16,7 @@ param location string
 param appServicePlanName string = ''
 param resourceGroupName string = ''
 param webServiceName string = ''
+// serviceName is used as value for the tag (azd-service-name) azd uses to identify
 param serviceName string = 'web'
 
 @description('Id of the user or app to assign application roles')
