@@ -1,7 +1,6 @@
-from flask import Flask, render_template, send_from_directory
 import os
-import pytest
-import sys
+
+from flask import Flask, render_template, send_from_directory
 
 app = Flask(__name__)
 
@@ -12,7 +11,6 @@ def favicon():
 
 @app.route("/")
 def home():
-    myPlatform = sys.platform
     return render_template("home.html")
 
 if __name__ == "__main__":
