@@ -1,2 +1,6 @@
 flask
 pytest
+python-dotenv
+opencensus-ext-azure >= 1.0.2
+opencensus-ext-flask >= 0.7.3
+opencensus-ext-requests >= 0.7.3

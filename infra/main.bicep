@@ -16,6 +16,9 @@ param location string
 param appServicePlanName string = ''
 param resourceGroupName string = ''
 param webServiceName string = ''
+param applicationInsightsDashboardName string = ''
+param applicationInsightsName string = ''
+param logAnalyticsName string = ''
 // serviceName is used as value for the tag (azd-service-name) azd uses to identify
 param serviceName string = 'web'
 
@@ -41,6 +44,7 @@ module web './core/host/appservice.bicep' = {
     name: !empty(webServiceName) ? webServiceName : '${abbrs.webSitesAppService}web-${resourceToken}'
     location: location
     tags: union(tags, { 'azd-service-name': serviceName })
+    applicationInsightsName: monitoring.outputs.applicationInsightsName
     appServicePlanId: appServicePlan.outputs.id
     runtimeName: 'python'
     runtimeVersion: '3.8'
@@ -62,7 +66,22 @@ module appServicePlan './core/host/appserviceplan.bicep' = {
   }
 }
 
+// Monitor application with Azure Monitor
+module monitoring './core/monitor/monitoring.bicep' = {
+  name: 'monitoring'
+  scope: rg
+  params: {
+    location: location
+    tags: tags
+    logAnalyticsName: !empty(logAnalyticsName) ? logAnalyticsName : '${abbrs.operationalInsightsWorkspaces}${resourceToken}'
+    applicationInsightsName: !empty(applicationInsightsName) ? applicationInsightsName : '${abbrs.insightsComponents}${resourceToken}'
+    applicationInsightsDashboardName: !empty(applicationInsightsDashboardName) ? applicationInsightsDashboardName : '${abbrs.portalDashboards}${resourceToken}'
+  }
+}
+
 // App outputs
 output AZURE_LOCATION string = location
 output AZURE_TENANT_ID string = tenant().tenantId
 output REACT_APP_WEB_BASE_URL string = web.outputs.uri
+output APPLICATIONINSIGHTS_CONNECTION_STRING string = monitoring.outputs.applicationInsightsConnectionString
+
